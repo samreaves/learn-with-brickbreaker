@@ -16,5 +16,7 @@
     "url": "https://github.com/samreaves/learn-with-brickbreaker/issues"
   },
   "homepage": "https://github.com/samreaves/learn-with-brickbreaker#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
 }
