@@ -1,0 +1,20 @@
+{
+  "name": "learn-with-brickbreaker",
+  "version": "1.0.0",
+  "description": "Getting comfortable with game mechanics by following a YouTube tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samreaves/learn-with-brickbreaker.git"
+  },
+  "author": "Sam Reaves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samreaves/learn-with-brickbreaker/issues"
+  },
+  "homepage": "https://github.com/samreaves/learn-with-brickbreaker#readme",
+  "devDependencies": {}
+}
