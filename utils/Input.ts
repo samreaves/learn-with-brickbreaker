@@ -22,7 +22,18 @@ export default class InputHandler {
         }
     }
 
-    stop() {
-        this.paddle.stop();
+    stop(event: KeyboardEvent) {
+        const key = event.keyCode;
+        switch (key) {
+            case 37:
+                if (this.paddle.currentSpeed < 0) {
+                    this.paddle.stop();
+                }
+                break;
+            case 39:
+                if (this.paddle.currentSpeed > 0) {
+                    this.paddle.stop();
+                }
+                break;
     }
 }
