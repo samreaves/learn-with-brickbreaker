@@ -8,6 +8,7 @@ export default class Game {
         this.gameHeight = gameHeight;
         this.context = context;
         this.lastTime = 0;
+        this.maxSpeed = 100;
     }
 
     start() {

@@ -9,7 +9,7 @@ export default class Ball {
         x: Number(this.originalPosition.x),
         y: Number(this.originalPosition.y)
     };
-    maxSpeed = 60;
+    maxSpeed = game.maxSpeed;
     currentSpeed = { x: this.maxSpeed, y: this.maxSpeed };
 
     constructor(game: any) {
