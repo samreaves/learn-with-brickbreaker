@@ -36,4 +36,4 @@ function gameLoop(timestamp: number) {
     requestAnimationFrame(gameLoop);
 }
 
-gameLoop();
+requestAnimationFrame(gameLoop);

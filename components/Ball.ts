@@ -8,7 +8,7 @@ export default class Ball {
         y: 30
     };
     maxSpeed = 100;
-    currentSpeed = -this.maxSpeed;
+    currentSpeed = { x: this.maxSpeed, y: 0 };
 
     constructor(gameWidth: number, gameHeight: number) {
         this.gameWidth = gameWidth;
@@ -24,19 +24,24 @@ export default class Ball {
     }
 
     update(deltaTime) {
-        if (!deltaTime) { return; }
+        this.position.y += this.currentSpeed.y / deltaTime;
+        this.position.x += this.currentSpeed.x / deltaTime;
 
-        this.position.y += this.currentSpeed / deltaTime;
-
-        if (this.position.x < 0) { this.position.x = 0; }
-        if ((this.position.x + (this.radius * 2)) > this.gameWidth) { this.position.x = this.gameWidth - (this.radius * 2); }
+        if (this.position.x < 0 + this.radius) {
+            this.position.x = 0 + this.radius;
+            this.currentSpeed.x = this.maxSpeed;
+        }
+        if ((this.position.x + this.radius) > this.gameWidth) {
+            this.position.x = this.gameWidth - this.radius;
+            this.currentSpeed.x = -this.maxSpeed;
+        }
         if ((this.position.y + this.radius) > this.gameHeight) {
             this.position.y = this.gameHeight - this.radius;
-            this.currentSpeed = -this.maxSpeed;
+            this.currentSpeed.y = -this.maxSpeed;
         }
         if ((this.position.y - this.radius) < 0) {
             this.position.y = 0 + this.radius;
-            this.currentSpeed = this.maxSpeed;
+            this.currentSpeed.y = this.maxSpeed;
         }
     }
 }
