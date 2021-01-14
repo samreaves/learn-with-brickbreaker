@@ -3,15 +3,15 @@ export default class Paddle {
     width = 150;
     height = 20;
     position = {
-        x: (gameWidth / 2 ) - (this.width / 2),
-        y: gameHeight - this.height - 10
+        x: (game.gameWidth / 2 ) - (this.width / 2),
+        y: game.gameHeight - this.height - 10
     };
     currentSpeed = 0;
     maxSpeed = 80;
 
-    constructor(gameWidth: number, gameHeight: number) {
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
+    constructor(game: any) {
+        this.gameWidth = game.gameWidth;
+        this.gameHeight = game.gameHeight;
     }
 
     draw(context: CanvasRenderingContext2D) {

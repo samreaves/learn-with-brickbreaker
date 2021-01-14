@@ -2,36 +2,38 @@ import Paddle from './components/Paddle';
 import Ball from './components/Ball';
 import InputHandler from './utils/Input';
 
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
+export default class Game {
+    constructor(gameWidth: number, gameHeight: number, context: any) {
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
+        this.context = context;
+        this.lastTime = 0;
+        this.maxSpeed = 100;
+    }
 
-let canvas = document.getElementById('game-screen');
-let context = canvas.getContext('2d');
-context.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    start() {
+        this.paddle = new Paddle(this);
+        let inputHandler = new InputHandler(this.paddle);
 
-let paddle = new Paddle(GAME_WIDTH, GAME_HEIGHT);
-let inputHandler = new InputHandler(paddle);
+        this.ball = new Ball(this));
 
-let ball = new Ball(GAME_WIDTH, GAME_HEIGHT));
+        this.paddle.draw(this.context);
+        this.ball.draw(this.context);
 
-paddle.draw(context);
-ball.draw(context);
+        requestAnimationFrame(this.gameLoop.bind(this));
+    }
 
+    gameLoop(timestamp: number) {
+        let deltaTime = timestamp - this.lastTime;
 
-let lastTime = 0;
+        this.lastTime = timestamp;
 
-function gameLoop(timestamp: number) {
-    let deltaTime = timestamp - lastTime;
+        this.context.clearRect(0, 0, this.gameWidth, this.gameHeight);
+        this.paddle.update(deltaTime);
+        this.paddle.draw(this.context);
+        this.ball.update(deltaTime);
+        this.ball.draw(this.context);
 
-    lastTime = timestamp;
-
-    context.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-    paddle.update(deltaTime);
-    paddle.draw(context);
-    ball.update(deltaTime);
-    ball.draw(context);
-
-    requestAnimationFrame(gameLoop);
+        requestAnimationFrame(this.gameLoop.bind(this));
+    }
 }
-
-requestAnimationFrame(gameLoop);

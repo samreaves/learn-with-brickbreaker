@@ -1,16 +1,19 @@
 export default class Ball {
 
     radius = 6;
-    position = {
-        x: (gameWidth / 2 ) - (this.radius),
+    originalPosition = {
+        x: (game.gameWidth / 2 ) - (this.radius),
         y: 30
+    }
+    position = {
+        x: Number(this.originalPosition.x),
+        y: Number(this.originalPosition.y)
     };
-    maxSpeed = 100;
+    maxSpeed = game.maxSpeed;
     currentSpeed = { x: this.maxSpeed, y: this.maxSpeed };
 
-    constructor(gameWidth: number, gameHeight: number) {
-        this.gameWidth = gameWidth;
-        this.gameHeight = gameHeight;
+    constructor(game: any) {
+        this.game = game;
     }
 
     draw(context: CanvasRenderingContext2D) {
@@ -29,12 +32,16 @@ export default class Ball {
             this.position.x = 0 + this.radius;
             this.currentSpeed.x = this.maxSpeed;
         }
-        if ((this.position.x + this.radius) > this.gameWidth) {
-            this.position.x = this.gameWidth - this.radius;
+        if ((this.position.x + this.radius) > this.game.gameWidth) {
+            this.position.x = this.game.gameWidth - this.radius;
             this.currentSpeed.x = -this.maxSpeed;
         }
-        if ((this.position.y + this.radius) > this.gameHeight) {
-            this.position.y = this.gameHeight - this.radius;
+        if ((this.position.y + this.radius) > this.game.gameHeight) {
+            this.position.y = this.originalPosition.y;
+        }
+        if ((this.position.y + this.radius) > this.game.paddle.position.y &&
+            this.position.x + this.radius >= this.game.paddle.position.x &&
+            this.position.x + this.radius <= this.game.paddle.position.x + this.game.paddle.width) {
             this.currentSpeed.y = -this.maxSpeed;
         }
         if ((this.position.y - this.radius) < 0) {
