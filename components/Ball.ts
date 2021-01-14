@@ -1,5 +1,3 @@
-import Constants from '../utils/Constants';
-
 export default class Ball {
 
     radius = 6;
