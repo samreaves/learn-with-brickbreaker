@@ -8,7 +8,7 @@ export default class Ball {
         y: 30
     };
     maxSpeed = 100;
-    currentSpeed = { x: this.maxSpeed, y: 0 };
+    currentSpeed = { x: this.maxSpeed, y: this.maxSpeed };
 
     constructor(gameWidth: number, gameHeight: number) {
         this.gameWidth = gameWidth;
@@ -16,7 +16,7 @@ export default class Ball {
     }
 
     draw(context: CanvasRenderingContext2D) {
-        context.fillStyle = '#00F';
+        context.fillStyle = '#F00';
         context.beginPath();
         context.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, true);
         context.fill();
