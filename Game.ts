@@ -23,7 +23,7 @@ export default class Game {
 
     start() {
         this.paddle = new Paddle(this);
-        let inputHandler = new InputHandler(this.paddle);
+        const inputHandler = new InputHandler(this.paddle);
 
         this.ball = new Ball(this);
 
@@ -35,7 +35,7 @@ export default class Game {
 
 
     gameLoop(timestamp: number) {
-        let deltaTime = timestamp - this.lastTime;
+        const deltaTime = timestamp - this.lastTime;
 
         this.lastTime = timestamp;
 

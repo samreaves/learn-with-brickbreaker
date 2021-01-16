@@ -35,5 +35,6 @@ export default class InputHandler {
                     this.paddle.stop();
                 }
                 break;
+        }
     }
 }

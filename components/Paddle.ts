@@ -9,7 +9,7 @@ export default class Paddle {
     currentSpeed = 0;
     speed = 80;
 
-    constructor(game: any) {
+    constructor(game: Game) {
         this.game = game;
         this.position = {
             x: (this.game.width / 2) - (this.width / 2),
