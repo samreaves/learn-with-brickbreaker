@@ -27,8 +27,7 @@ export default class Game {
 
         this.ball = new Ball(this);
 
-        this.paddle.draw(this.context);
-        this.ball.draw(this.context);
+        this.draw();
 
         requestAnimationFrame(this.gameLoop.bind(this));
     }
@@ -40,11 +39,19 @@ export default class Game {
         this.lastTime = timestamp;
 
         this.context.clearRect(0, 0, this.width, this.height);
-        this.paddle.update(deltaTime);
-        this.paddle.draw(this.context);
-        this.ball.update(deltaTime);
-        this.ball.draw(this.context);
+        this.update(deltaTime);
+        this.draw();
 
         requestAnimationFrame(this.gameLoop.bind(this));
+    }
+
+    update(deltaTime: number) {
+        this.paddle.update(deltaTime);
+        this.ball.update(deltaTime);
+    }
+
+    draw() {
+        this.paddle.draw(this.context);
+        this.ball.draw(this.context);
     }
 }
