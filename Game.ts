@@ -12,6 +12,7 @@ export default class Game {
     public ballSpeed: number;
     public width: number;
     public height: number;
+    public gameObjects: any[];
 
     constructor(gameWidth: number, gameHeight: number, context: CanvasRenderingContext2D) {
         this.width = gameWidth;
@@ -26,6 +27,7 @@ export default class Game {
         const inputHandler = new InputHandler(this.paddle);
 
         this.ball = new Ball(this);
+        this.gameObjects = [this.paddle, this.ball];
 
         this.draw();
 
@@ -46,12 +48,10 @@ export default class Game {
     }
 
     update(deltaTime: number) {
-        this.paddle.update(deltaTime);
-        this.ball.update(deltaTime);
+        this.gameObjects.forEach(object => object.update(deltaTime));
     }
 
     draw() {
-        this.paddle.draw(this.context);
-        this.ball.draw(this.context);
+        this.gameObjects.forEach(object => object.draw(this.context));
     }
 }
