@@ -1,4 +1,5 @@
-import Game from "../Game";
+import Game from '../Game';
+import { Position } from '../interfaces';
 
 export default class Paddle {
     private game: Game;

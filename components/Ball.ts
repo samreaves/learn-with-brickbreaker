@@ -1,4 +1,8 @@
-import Game from "../Game";
+import Game from '../Game';
+import {
+    Position,
+    BallSpeed
+} from '../interfaces';
 
 export default class Ball {
     private game: Game;
@@ -44,7 +48,6 @@ export default class Ball {
             this.currentSpeed.x = this.maxSpeed;
         }
         if ((this.currentPosition.x + this.radius) > this.game.width) {
-            console.log('this happened');
             this.currentPosition.x = this.game.width - this.radius;
             this.currentSpeed.x = -this.maxSpeed;
         }

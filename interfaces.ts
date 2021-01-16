@@ -1,9 +1,9 @@
-interface Position {
+export interface Position {
     x: number,
     y: number
 }
 
-interface BallSpeed {
+export interface BallSpeed {
     x: number,
     y: number
 }
