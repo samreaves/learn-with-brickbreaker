@@ -4,7 +4,7 @@ import { Position } from '../interfaces';
 export default class Paddle {
     private game: Game;
 
-    width = 100;
+    width = 150;
     height = 20;
     position: Position
     currentSpeed = 0;
