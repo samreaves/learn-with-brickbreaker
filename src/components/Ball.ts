@@ -1,19 +1,21 @@
-import Game from '../Game';
 import {
     Position,
-    BallSpeed
+    BallSpeed,
+    IGame,
+    IBall
 } from '../interfaces';
+import { detectCollision } from '../utils/CollisionDetection';
 
-export default class Ball {
-    private game: Game;
+export default class Ball implements IBall {
+    private game: IGame;
+    private originalPosition: Position;
 
-    radius = 6;
-    originalPosition: Position;
-    currentPosition: Position;
-    maxSpeed: number;
-    currentSpeed: BallSpeed;
+    public radius = 6;
+    public currentPosition: Position;
+    public maxSpeed: number;
+    public currentSpeed: BallSpeed;
 
-    constructor(game: Game) {
+    constructor(game: IGame) {
         this.game = game;
         this.originalPosition = {
             x: (this.game.width / 2) - this.radius,
@@ -54,14 +56,12 @@ export default class Ball {
         if ((this.currentPosition.y + this.radius) > this.game.height) {
             this.currentPosition.y = this.originalPosition.y;
         }
-        if ((this.currentPosition.y + this.radius) > this.game.paddle.position.y &&
-            this.currentPosition.x + this.radius >= this.game.paddle.position.x &&
-            this.currentPosition.x + this.radius <= this.game.paddle.position.x + this.game.paddle.width) {
-            this.currentSpeed.y = -this.maxSpeed;
-        }
         if ((this.currentPosition.y - this.radius) < 0) {
             this.currentPosition.y = 0 + this.radius;
             this.currentSpeed.y = this.maxSpeed;
+        }
+        if (detectCollision(this, this.game.paddle)) {
+            this.currentSpeed.y = -this.maxSpeed;
         }
     }
 }

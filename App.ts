@@ -1,4 +1,4 @@
-import Game from './Game';
+import Game from './src/Game';
 
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;

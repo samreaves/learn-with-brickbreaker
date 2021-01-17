@@ -1,9 +1,9 @@
-import Paddle from '../components/Paddle';
+import { IPaddle } from '../interfaces';
 
 export default class InputHandler {
-    paddle: Paddle;
+    private paddle: IPaddle;
 
-    constructor(paddle: Paddle) {
+    constructor(paddle: IPaddle) {
         this.paddle = paddle;
 
         document.addEventListener('keydown', this.move.bind(this));
