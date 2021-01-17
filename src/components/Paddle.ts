@@ -1,21 +1,29 @@
-import Game from '../Game';
-import { Position } from '../interfaces';
+import {
+    Position,
+    IGame,
+    IPaddle,
+    IGameObject,
+    Boundaries
+} from '../interfaces';
+import { calculateBoundaries } from '../utils/CollisionDetection';
 
-export default class Paddle {
-    private game: Game;
+export default class Paddle implements IPaddle {
+    private game: IGame;
 
-    width = 150;
+    width = 100;
     height = 20;
     position: Position
     currentSpeed = 0;
     speed = 80;
+    boundaries: Boundaries
 
-    constructor(game: Game) {
+    constructor(game: IGame) {
         this.game = game;
         this.position = {
             x: (this.game.width / 2) - (this.width / 2),
             y: this.game.height - this.height - 10
         };
+        this.boundaries = calculateBoundaries(this.position, this.width, this.height);
     }
 
     draw(context: CanvasRenderingContext2D) {
@@ -28,6 +36,7 @@ export default class Paddle {
          
         if (this.position.x < 0) { this.position.x = 0; }
         if ((this.position.x + this.width) > this.game.width) { this.position.x = this.game.width - this.width; }
+        this.boundaries = calculateBoundaries(this.position, this.width, this.height);
     }
 
     moveLeft() {

@@ -1,8 +1,14 @@
+import { IGame } from './interfaces';
 import Paddle from './components/Paddle';
 import Ball from './components/Ball';
 import InputHandler from './utils/Input';
+import {
+    buildLevel,
+    level1
+} from './levels/level1';
 
-export default class Game {
+
+export default class Game implements IGame {
 
     private context: CanvasRenderingContext2D;
     private lastTime: number;
@@ -27,7 +33,9 @@ export default class Game {
         const inputHandler = new InputHandler(this.paddle);
 
         this.ball = new Ball(this);
-        this.gameObjects = [this.paddle, this.ball];
+        const bricks = buildLevel(this, level1);
+
+        this.gameObjects = [this.paddle, this.ball, ...bricks];
 
         this.draw();
 
@@ -49,6 +57,7 @@ export default class Game {
 
     update(deltaTime: number) {
         this.gameObjects.forEach(object => object.update(deltaTime));
+        this.gameObjects = this.gameObjects.filter(object => !object.markedForDeletion);
     }
 
     draw() {
