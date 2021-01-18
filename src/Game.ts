@@ -1,4 +1,10 @@
-import { IGame } from './interfaces';
+import {
+    IGame,
+    IBrick,
+    IPaddle,
+    IBall,
+    GameState
+} from './interfaces';
 import Paddle from './components/Paddle';
 import Ball from './components/Ball';
 import InputHandler from './utils/Input';
@@ -6,19 +12,22 @@ import {
     buildLevel,
     level1
 } from './levels/level1';
+import { renderState } from './utils/RenderState';
 
 
 export default class Game implements IGame {
 
-    private context: CanvasRenderingContext2D;
     private lastTime: number;
 
+    public context: CanvasRenderingContext2D;
     public paddle: Paddle;
     public ball: Ball;
     public ballSpeed: number;
     public width: number;
     public height: number;
-    public gameObjects: any[];
+    public gameObjects: (IPaddle|IBall)[];
+    public bricks: IBrick[] = [];
+    public gameState: GameState;
 
     constructor(gameWidth: number, gameHeight: number, context: CanvasRenderingContext2D) {
         this.width = gameWidth;
@@ -26,16 +35,20 @@ export default class Game implements IGame {
         this.context = context;
         this.lastTime = 0;
         this.ballSpeed = 100;
+        this.gameState = GameState.MENU;
+        this.gameObjects = [];
+
+        this.paddle = new Paddle(this);
+        const inputHandler = new InputHandler(this);
+        this.ball = new Ball(this);
+        this.draw();
     }
 
     start() {
-        this.paddle = new Paddle(this);
-        const inputHandler = new InputHandler(this.paddle);
-
-        this.ball = new Ball(this);
-        const bricks = buildLevel(this, level1);
-
-        this.gameObjects = [this.paddle, this.ball, ...bricks];
+        this.bricks = buildLevel(this, level1);
+        this.ball.reset();
+        this.gameObjects = [this.paddle, this.ball];
+        this.gameState = GameState.RUNNING;
 
         this.draw();
 
@@ -44,6 +57,7 @@ export default class Game implements IGame {
 
 
     gameLoop(timestamp: number) {
+
         const deltaTime = timestamp - this.lastTime;
 
         this.lastTime = timestamp;
@@ -52,15 +66,33 @@ export default class Game implements IGame {
         this.update(deltaTime);
         this.draw();
 
+        if (this.gameState === GameState.MENU) {
+            return;
+        }
+
         requestAnimationFrame(this.gameLoop.bind(this));
     }
 
     update(deltaTime: number) {
-        this.gameObjects.forEach(object => object.update(deltaTime));
-        this.gameObjects = this.gameObjects.filter(object => !object.markedForDeletion);
+        if (
+            this.gameState === GameState.PAUSED ||
+            this.gameState === GameState.MENU ||
+            this.gameState === GameState.GAMEOVER ||
+            this.gameState === GameState.WIN
+        ) { return; }
+
+        [...this.gameObjects, ...this.bricks].forEach(object => object.update(deltaTime));
+        this.bricks = this.bricks.filter(object => !object.markedForDeletion);
+        if (this.bricks.length === 0) {
+            this.gameState = GameState.WIN;
+        }
     }
 
     draw() {
-        this.gameObjects.forEach(object => object.draw(this.context));
+        renderState(this);
+    }
+
+    togglePause() {
+        this.gameState = this.gameState === GameState.PAUSED ? GameState.RUNNING : GameState.PAUSED;
     }
 }

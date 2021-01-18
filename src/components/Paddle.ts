@@ -9,17 +9,19 @@ import { calculateBoundaries } from '../utils/CollisionDetection';
 
 export default class Paddle implements IPaddle {
     private game: IGame;
+    private originalPosition: Position;
 
-    width = 100;
-    height = 20;
-    position: Position
-    currentSpeed = 0;
-    speed = 80;
-    boundaries: Boundaries
+    public width = 100;
+    public height = 20;
+    public position: Position
+
+    public currentSpeed = 0;
+    public speed = 100;
+    public boundaries: Boundaries
 
     constructor(game: IGame) {
         this.game = game;
-        this.position = {
+        this.originalPosition = {
             x: (this.game.width / 2) - (this.width / 2),
             y: this.game.height - this.height - 10
         };
@@ -49,5 +51,9 @@ export default class Paddle implements IPaddle {
 
     stop() {
         this.currentSpeed = 0;
+    }
+
+    reset() {
+        this.position = Object.assign({}, this.originalPosition);
     }
 }

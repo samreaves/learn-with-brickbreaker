@@ -1,40 +1,73 @@
-import { IPaddle } from '../interfaces';
+import {
+    GameState,
+    IGame
+} from '../interfaces';
 
 export default class InputHandler {
-    private paddle: IPaddle;
+    private game: IGame;
 
-    constructor(paddle: IPaddle) {
-        this.paddle = paddle;
+    constructor(game: IGame) {
+        this.game = game;
 
-        document.addEventListener('keydown', this.move.bind(this));
-        document.addEventListener('keyup', this.stop.bind(this));
+        document.addEventListener('keydown', this.keyDown.bind(this));
+        document.addEventListener('keyup', this.keyUp.bind(this));
     }
 
-    move(event: KeyboardEvent) {
-        const key = event.keyCode;
-        switch (key) {
-            case 37:
-                this.paddle.moveLeft();
-                break;
-            case 39:
-                this.paddle.moveRight();
-                break;
+    keyDown(event: KeyboardEvent) {
+        if (this.game.gameState === GameState.RUNNING) {
+            const key = event.keyCode;
+            switch (key) {
+                case 37:
+                    this.game.paddle.moveLeft();
+                    break;
+                case 39:
+                    this.game.paddle.moveRight();
+                    break;
+            }
         }
     }
 
-    stop(event: KeyboardEvent) {
+    keyUp(event: KeyboardEvent) {
         const key = event.keyCode;
         switch (key) {
             case 37:
-                if (this.paddle.currentSpeed < 0) {
-                    this.paddle.stop();
+                if (
+                    this.game.gameState === GameState.RUNNING &&
+                    this.game.paddle.currentSpeed < 0
+                ) {
+                    this.game.paddle.stop();
                 }
                 break;
             case 39:
-                if (this.paddle.currentSpeed > 0) {
-                    this.paddle.stop();
+                if (
+                    this.game.gameState === GameState.RUNNING &&
+                    this.game.paddle.currentSpeed > 0
+                ) {
+                    this.game.paddle.stop();
                 }
                 break;
+            case 27:
+                if (
+                    this.game.gameState === GameState.RUNNING ||
+                    this.game.gameState === GameState.PAUSED
+                ) {
+                    this.game.togglePause();
+                }
+                break;
+            case 32:
+                if (this.game.gameState === GameState.MENU) {
+                    this.game.start();
+                }
+                break;
+            case 13:
+                if (
+                    this.game.gameState === GameState.GAMEOVER ||
+                    this.game.gameState === GameState.WIN
+                ) {
+                    this.game.gameState = GameState.MENU;
+                }
+            default:
+                return;
         }
     }
 }
