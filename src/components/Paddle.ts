@@ -25,6 +25,7 @@ export default class Paddle implements IPaddle {
             x: (this.game.width / 2) - (this.width / 2),
             y: this.game.height - this.height - 10
         };
+        this.reset();
         this.boundaries = calculateBoundaries(this.position, this.width, this.height);
     }
 
@@ -55,5 +56,6 @@ export default class Paddle implements IPaddle {
 
     reset() {
         this.position = Object.assign({}, this.originalPosition);
+        this.stop();
     }
 }
