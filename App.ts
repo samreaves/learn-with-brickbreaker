@@ -8,4 +8,3 @@ const context = canvas.getContext('2d');
 context.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
 const game = new Game(GAME_WIDTH, GAME_HEIGHT, context);
-game.start();

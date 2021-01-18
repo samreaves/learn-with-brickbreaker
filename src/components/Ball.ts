@@ -2,14 +2,15 @@ import {
     Position,
     BallSpeed,
     IGame,
-    IBall
+    IBall,
+    GameState
 } from '../interfaces';
 import { detectCollision } from '../utils/CollisionDetection';
 
 export default class Ball implements IBall {
     private game: IGame;
-    private originalPosition: Position;
 
+    public originalPosition: Position;
     public radius = 6;
     public currentPosition: Position;
     public maxSpeed: number;
@@ -21,16 +22,8 @@ export default class Ball implements IBall {
             x: (this.game.width / 2) - this.radius,
             y: 30
         };
-        this.currentPosition = {
-            x: Number(this.originalPosition.x),
-            y: Number(this.originalPosition.y)
-        };
         this.maxSpeed = this.game.ballSpeed;
-        this.currentSpeed = {
-            x: this.maxSpeed,
-            y: this.maxSpeed
-        }; 
-        
+        this.reset();
     }
 
     draw(context: CanvasRenderingContext2D) {
@@ -54,7 +47,8 @@ export default class Ball implements IBall {
             this.currentSpeed.x = -this.maxSpeed;
         }
         if ((this.currentPosition.y + this.radius) > this.game.height) {
-            this.currentPosition.y = this.originalPosition.y;
+            this.game.gameState = GameState.GAMEOVER;
+            this.game.ball.reset();
         }
         if ((this.currentPosition.y - this.radius) < 0) {
             this.currentPosition.y = 0 + this.radius;
@@ -63,5 +57,14 @@ export default class Ball implements IBall {
         if (detectCollision(this, this.game.paddle)) {
             this.currentSpeed.y = -this.maxSpeed;
         }
+    }
+
+    reset() {
+        this.currentPosition = Object.assign({}, this.originalPosition);
+        this.currentSpeed = {
+            x: this.maxSpeed,
+            y: this.maxSpeed
+        };
+        this.game.paddle.reset();
     }
 }
