@@ -9,8 +9,8 @@ import { detectCollision } from '../utils/CollisionDetection';
 
 export default class Ball implements IBall {
     private game: IGame;
+    private originalPosition: Position;
 
-    public originalPosition: Position;
     public radius = 6;
     public currentPosition: Position;
     public maxSpeed: number;
