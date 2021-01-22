@@ -2,7 +2,6 @@ import {
     Position,
     IGame,
     IPaddle,
-    IGameObject,
     Boundaries
 } from '../interfaces';
 import { calculateBoundaries } from '../utils/CollisionDetection';
