@@ -47,18 +47,17 @@ export default class Game implements IGame {
         this.automated = automated;
 
         this.paddle = new Paddle(this);
+        this.ball = new Ball(this);
+        this.draw();
         
         /* If automated, intake manipulator for neural net to play */
         if (this.automated && neuralNet) {
-            
+            // this.start();
         }
         /* If not automated, intake input handler for user play */
         else {
             const inputHandler = new InputHandler(this);
         }
-
-        this.ball = new Ball(this);
-        this.draw();
     }
 
     start() {

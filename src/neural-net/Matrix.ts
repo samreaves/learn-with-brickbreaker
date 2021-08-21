@@ -1,5 +1,5 @@
 import { IMatrix } from './interfaces';
-export default class Matrix {
+export default class Matrix implements IMatrix {
 
     public rows: number;
     public columns: number;
