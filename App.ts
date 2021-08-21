@@ -1,7 +1,8 @@
-import Game from './src/Game';
-import Matrix from './src/neural-net/neural-net';
+import Game from './src/game/Game';
+import Matrix from './src/neural-net/Matrix';
 
 const neuralNet = new Matrix(2, 3, []);
+neuralNet.randomWeights();
 console.table(neuralNet.data);
 
 const GAME_WIDTH = 800;
