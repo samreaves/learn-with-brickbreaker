@@ -18,6 +18,7 @@ import { renderState } from './utils/RenderState';
 export default class Game implements IGame {
 
     private lastTime: number;
+    private automated: boolean;
 
     public context: CanvasRenderingContext2D;
     public paddle: Paddle;
@@ -29,7 +30,13 @@ export default class Game implements IGame {
     public bricks: IBrick[] = [];
     public gameState: GameState;
 
-    constructor(gameWidth: number, gameHeight: number, context: CanvasRenderingContext2D) {
+    constructor(
+        gameWidth: number,
+        gameHeight: number,
+        context: CanvasRenderingContext2D,
+        automated?: boolean,
+        neuralNet?: any,
+    ) {
         this.width = gameWidth;
         this.height = gameHeight;
         this.context = context;
@@ -37,9 +44,19 @@ export default class Game implements IGame {
         this.ballSpeed = 100;
         this.gameState = GameState.MENU;
         this.gameObjects = [];
+        this.automated = automated;
 
         this.paddle = new Paddle(this);
-        const inputHandler = new InputHandler(this);
+        
+        /* If automated, intake manipulator for neural net to play */
+        if (this.automated && neuralNet) {
+            
+        }
+        /* If not automated, intake input handler for user play */
+        else {
+            const inputHandler = new InputHandler(this);
+        }
+
         this.ball = new Ball(this);
         this.draw();
     }

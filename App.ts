@@ -1,4 +1,8 @@
 import Game from './src/Game';
+import Matrix from './src/neural-net/neural-net';
+
+const neuralNet = new Matrix(2, 3, []);
+// console.table(neuralNet);
 
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
