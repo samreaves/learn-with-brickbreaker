@@ -1,5 +1,6 @@
 import { IMatrix, INeuralNetwork } from "./interfaces";
 import Matrix from "./Matrix";
+import { sigmoid } from './Utils';
 
 export default class NeuralNetwork implements INeuralNetwork {
 
@@ -21,5 +22,16 @@ export default class NeuralNetwork implements INeuralNetwork {
 
         this.weights0.randomWeights();
         this.weights1.randomWeights();
+    }
+
+    feedForward(input: any[]) {
+        let inputMatrix = Matrix.convertArrayToMatrix(input);
+        let hidden = Matrix.dot(inputMatrix, this.weights0);
+        hidden = Matrix.applyFunction(hidden, (x: number) => sigmoid(x));
+
+        let outputs = Matrix.dot(hidden, this.weights1);
+        outputs = Matrix.applyFunction(outputs, (x: number) => sigmoid(x));
+
+        return outputs;
     }
 }

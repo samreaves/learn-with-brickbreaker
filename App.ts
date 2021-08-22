@@ -2,6 +2,7 @@ import Game from './src/game/Game';
 import NeuralNetwork from './src/neural-net/NeuralNet';
 
 const neuralNet = new NeuralNetwork(2, 5, 1);
+neuralNet.feedForward([0, 1]);
 
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
