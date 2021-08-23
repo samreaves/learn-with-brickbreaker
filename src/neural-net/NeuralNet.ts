@@ -34,4 +34,25 @@ export default class NeuralNetwork implements INeuralNetwork {
 
         return outputs;
     }
+
+    train(input: any[], target: any[]) {
+        /* Feed the input data through the network */
+        let outputs = this.feedForward(input);
+
+        /* Calculate the output errors (target minus outputs) */
+        let targets = Matrix.convertArrayToMatrix(target);
+        let outputErrors = Matrix.subtract(targets, outputs);
+
+        /* Calculate the deltas (errors * derivitive of of the output) */
+        let outputDerivitives = Matrix.applyFunction(outputs, (x: number) => sigmoid(x, true));
+        let outputDeltas = Matrix.multiply(outputErrors, outputDerivitives);
+
+        /* Calculate hidden layer errors (deltas dot transpose of weights */
+        let weights1Tranposed = Matrix.transpose(this.weights1);
+        let hiddenErrors = Matrix.dot(outputDeltas, weights1Tranposed);
+
+        /* Calculate the hidden deltas (errors * derivitve of hidden) */
+        // let hiddenDerivitives = Matrix.applyFunction(this.hidden, (x: number) => sigmoid(x, true));
+        // let hiddenDeltas = Matrix.multiply(outputErrors, outputDerivitives);
+    }
 }
