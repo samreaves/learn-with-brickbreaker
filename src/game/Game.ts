@@ -3,8 +3,9 @@ import {
     IBrick,
     IPaddle,
     IBall,
-    GameState
+    GameState,
 } from './interfaces';
+import INeuralNetwork from '../neural-net/NeuralNet';
 import Paddle from './components/Paddle';
 import Ball from './components/Ball';
 import InputHandler from './utils/Input';
@@ -19,6 +20,7 @@ export default class Game implements IGame {
 
     private lastTime: number;
     private automated: boolean;
+    private neuralNet: INeuralNetwork | null;
 
     public context: CanvasRenderingContext2D;
     public paddle: Paddle;
@@ -35,7 +37,7 @@ export default class Game implements IGame {
         gameHeight: number,
         context: CanvasRenderingContext2D,
         automated?: boolean,
-        neuralNet?: any,
+        neuralNet?: INeuralNetwork,
     ) {
         this.width = gameWidth;
         this.height = gameHeight;
@@ -44,7 +46,8 @@ export default class Game implements IGame {
         this.ballSpeed = 30;
         this.gameState = GameState.MENU;
         this.gameObjects = [];
-        this.automated = automated;
+        this.automated = automated || false;
+        this.neuralNet = neuralNet || null;
 
         this.paddle = new Paddle(this);
         this.ball = new Ball(this);
@@ -52,7 +55,7 @@ export default class Game implements IGame {
         
         /* If automated, intake manipulator for neural net to play */
         if (this.automated && neuralNet) {
-            // this.start();
+            this.start();
         }
         /* If not automated, intake input handler for user play */
         else {

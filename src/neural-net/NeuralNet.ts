@@ -36,6 +36,8 @@ export default class NeuralNetwork implements INeuralNetwork {
     }
 
     train(input: any[], target: any[]) {
+        console.log('input: ', input);
+        console.log('target: ', target);
         /* Feed the input data through the network */
         let outputs = this.feedForward(input);
 
@@ -51,7 +53,7 @@ export default class NeuralNetwork implements INeuralNetwork {
         let weights1Tranposed = Matrix.transpose(this.weights1);
         let hiddenErrors = Matrix.dot(outputDeltas, weights1Tranposed);
 
-        /* Calculate the hidden deltas (errors * derivitve of hidden) */
+        /* Calculate the hidden deltas (errors * derivitive of hidden layer) */
         // let hiddenDerivitives = Matrix.applyFunction(this.hidden, (x: number) => sigmoid(x, true));
         // let hiddenDeltas = Matrix.multiply(outputErrors, outputDerivitives);
     }
