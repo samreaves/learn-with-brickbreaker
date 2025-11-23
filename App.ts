@@ -3,7 +3,7 @@ import NeuralNetwork from './src/neural-net/NeuralNet';
 
 const automated = true;
 
-const neuralNet = new NeuralNetwork(3, 5, 2);
+const neuralNet = new NeuralNetwork(5, 5, 3);
 
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
