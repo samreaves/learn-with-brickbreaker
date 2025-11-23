@@ -34,7 +34,7 @@ export default class Game implements IGame {
         this.height = gameHeight;
         this.context = context;
         this.lastTime = 0;
-        this.ballSpeed = 100;
+        this.ballSpeed = 30;
         this.gameState = GameState.MENU;
         this.gameObjects = [];
 
